@@ -1,6 +1,6 @@
 package antipattern;
 
-import pattern.SudokuModel;
+//import pattern.MVC.SudokuModel;
 
 public class SudokuSolver {
 

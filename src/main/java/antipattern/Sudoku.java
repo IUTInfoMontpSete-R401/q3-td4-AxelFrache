@@ -1,6 +1,6 @@
 package antipattern;
 
-import pattern.SudokuModel;
+//import pattern.MVC.SudokuModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +106,6 @@ public class Sudoku {
         public void update(int row, int col, int value) {
         System.out.println("Cell at row " + row + ", column " + col + " updated to " + value);
         display();
-
     }
 
         public void displayWelcomeMessage() {
