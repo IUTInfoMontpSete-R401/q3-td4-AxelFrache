@@ -35,6 +35,41 @@ Facilite l'ajout de nouvelles fonctionnalités, comme l'implémentation d'un sys
 
 ### Question 6
 La solution antipattern ne respecte pas les principes SOLID.
-En effet, les responsabilités sont mélangés dans la classe Sudoku
 
 ### Question 7
+
+On pourrait diviser le Sudoku en trois parties distinctes en suivant le patron de conception Modèle-Vue-Contrôleur. 
+Le modèle représenterait les données et la logique du jeu et serait responsable de notifier les observateurs lorsqu'il y a un changement dans les données. 
+La vue assurerait la présentation du jeu en s'actualisant en fonction des changements dans le modèle grâce au patron Observateur. 
+Enfin, le contrôleur pourrait gérer les événements utilisateur, interagir avec le modèle et la vue pour mettre à jour l'état du jeu, et coordonner les interactions entre le modèle et la vue.
+
+### Question 8
+Pour appliquer le patron Observateur dans le jeu de Sudoku, on crée un lien entre le modèle et la vue, de manière à ce que la vue soit informée des modifications dans le modèle. 
+Pour cela, le modèle (SudokuModel) doit avoir une liste d'observateurs et des méthodes pour ajouter (registerObserver) et informer (notifyObservers) ces observateurs lorsqu'il y a une modification des données.
+La vue (SudokuView) doit mettre en œuvre l'interface SudokuObserver, qui définit la méthode update. Cette méthode est appelée par le modèle lorsqu'il y a une modification des données. 
+Donc, chaque fois qu'une mise à jour a lieu dans le modèle, la méthode update est appelée sur chaque observateur enregistré, et la vue se met à jour en conséquence.
+
+### Question 9
+Pour appliquer le patron Stratégie dans la résolution du Sudoku, on crée une interface SudokuSolverStrategy qui définit la méthode de résolution générale comme solve(SudokuModel). 
+Cette interface sera implémentée par différentes classes concrètes représentant les algorithmes de résolution spécifiques, tels que BacktrackingSolver.
+Ensuite, dans le modèle ou le contrôleur, on utilise une référence de type SudokuSolver pour interagir avec l'algorithme de résolution. 
+Pendant la création de l'instance du modèle ou du contrôleur, on peut choisir l'implémentation de l'algorithme de résolution en fonction des besoins.
+
+### Question 10
+Pour utiliser le patron Commande dans le jeu de Sudoku, on crée une classe SudokuCommand avec des méthodes pour exécuter et annuler les actions. 
+On crée ensuite des classes spécifiques pour chaque action avec une classe SetValueCommand pour modifier une valeur dans le modèle.
+Le contrôleur utilise ces commandes pour gérer les actions des utilisateurs. 
+Lorsqu'une action est réalisée, le contrôleur exécute la commande correspondante. 
+Pour annuler ou rétablir une action, le contrôleur utilise la méthode undo() de la commande appropriée.
+
+### Question 11
+On peut se servir du pattern Composite pour construire la vue du Sudoku à partir de multiples SudokuCellView.
+Pour cela nous pouvons modifier la classe SudokuView pour lui ajouter un tableau de SudokuCellView et mettre à jour ces objets lors de l'appel de la méthode update().
+
+### Question 12
+Pour que le jeu de Sudoku fonctionne, il faudrait créer une interface graphique pour afficher la grille de jeu et permettre à l'utilisateur de saisir des chiffres. 
+Il faudrait également créer une classe pour le modèle de Sudoku qui contient les données du jeu et les méthodes pour accéder et modifier les valeurs de la grille. 
+Ensuite, il faudrait relier l'interface utilisateur à la classe de modèle pour permettre à l'utilisateur de jouer et mettre à jour la grille. 
+Enfin, il faudrait ajouter une méthode pour vérifier si le jeu est terminé en vérifiant si toutes les cases sont remplies correctement.
+
+
