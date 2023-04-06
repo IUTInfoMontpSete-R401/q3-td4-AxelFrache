@@ -34,7 +34,8 @@ Cela simplifie également la gestion de l'interface et permet plus de modularit�
 Facilite l'ajout de nouvelles fonctionnalités, comme l'implémentation d'un système d'annulation et améliore la modularité du code.
 
 ### Question 6
-La solution antipattern ne respecte pas les principes SOLID.
+La classe Sudoku contient à la fois des méthodes pour résoudre le Sudoku (par exemple, isValueValid() et setValueAt()) et des méthodes pour afficher et interagir avec l'utilisateur (par exemple, display() et askUserForValue()). 
+Cette classe ne respecte pas le principe de responsabilité unique (SRP) et est donc difficile à maintenir et à tester.
 
 ### Question 7
 
@@ -72,4 +73,6 @@ Il faudrait également créer une classe pour le modèle de Sudoku qui contient 
 Ensuite, il faudrait relier l'interface utilisateur à la classe de modèle pour permettre à l'utilisateur de jouer et mettre à jour la grille. 
 Enfin, il faudrait ajouter une méthode pour vérifier si le jeu est terminé en vérifiant si toutes les cases sont remplies correctement.
 
-
+### Question 13
+##### Diagramme de classes (solution MVC):
+![MVC UML](UML/mvcUML.png)
