@@ -18,12 +18,12 @@ Le modèle MVC peut aider en séparant les responsabilités de l'application et 
 
 ### Question 4
 L'utilisation du modèle MVC offre plusieurs avantages :
-- Séparer les responsabilités : divise les responsabilités entre le modèle, la vue et le contrôleur.
-- Testabilité : La sépération des tâches permet de tester les différentes parties de l'application de manière indépendante.
-- Réutilisabilité : Les composants du MVC peuvent être réutilisés pour d'autres parties de l'application.
-- Extensibilité : Il devient plus facile de faire évoluer l'application.
-- Flexibilité : On peut facilement remplacer des composants sans affecter les autres.
-- Bonnes pratiques de programmation : Encourage à l'utilisation des principes SOLID.
+- Divise les responsabilités entre le modèle, la vue et le contrôleur.
+- La sépération des tâches permet de tester les différentes parties de l'application de manière indépendante.
+- Les composants du MVC peuvent être réutilisés pour d'autres parties de l'application.
+- Rend l'évolution de l'application plus simple.
+- Permet de remplacer facilement des composants sans affecter les autres.
+- Encourage à l'utilisation des principes SOLID.
 
 ### Question 5
 - Statégie : On peut utiliser le pattern stratégie pour implémenter différentes techniques de résolution ou de génération de grilles.
@@ -44,6 +44,7 @@ Le modèle contiendra les données du jeu, la vue gérera l'affichage et le cont
 ### Question 8
 Pour appliquer le patron Observateur, nous ferons en sorte que la classe SudokuModel hérite de l'interface SudokuObserver et qu'elle notifie tous les observateurs (SudokuCellView) lorsqu'une valeur change. 
 La classe SudokuView deviendra également un observateur et mettra à jour l'affichage en fonction des changements dans le modèle.
+
 ### Question 9
 Pour appliquer le patron Stratégie, nous créerons une interface SudokuSolver que les différentes classes d'algorithmes de résolution du Sudoku implémenteront. 
 Le modèle utilisera cette interface pour résoudre le Sudoku, permettant de changer facilement l'algorithme de résolution sans impacter le reste du code.
