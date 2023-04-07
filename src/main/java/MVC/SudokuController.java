@@ -1,68 +1,55 @@
 package MVC;
 
-import java.util.List;
-import java.util.Scanner;
+import java.util.Stack;
 
 public class SudokuController {
     private SudokuModel model;
     private SudokuView view;
-    private List<SudokuCommand> commandHistory;
-    private List<SudokuCommand> undoneCommands;
+    private SolverStrategy solver;
+    private Stack<SudokuCommand> undoStack;
+    private Stack<SudokuCommand> redoStack;
 
     public SudokuController(SudokuModel model, SudokuView view) {
         this.model = model;
         this.view = view;
+        this.solver = new BacktrackingSolver();
+        this.undoStack = new Stack<>();
+        this.redoStack = new Stack<>();
     }
 
     public void startGame() {
-        // Initialize the game with a predefined board or generate a new board
-        // ...
-        view.updateAll();
-    }
-
-    public void handleUserInput() {
-        Scanner scanner = new Scanner(System.in);
-        while (!model.isGameFinished()) {
-            System.out.println("Enter row number (1-" + model.getBoardSize() + "):");
-            int row = scanner.nextInt() - 1; // Convert to 0-based indexing
-            System.out.println("Enter column number (1-" + model.getBoardSize() + "):");
-            int col = scanner.nextInt() - 1; // Convert to 0-based indexing
-            System.out.print("Enter value (1-" + model.getBoardSize() + "): ");
-            int value = scanner.nextInt();
-
-            if (model.isValueValid(row, col, value)) {
-                model.setValueAt(row, col, value);
-                view.updateAll();
-            } else {
-                System.out.println("Invalid value. Please try again.");
-            }
-        }
-        view.displayVictoryMessage();
+        model.registerObserver(view);
+        view.display();
     }
 
     public void handleUserInput(int row, int col, int value) {
         if (model.isValueValid(row, col, value)) {
-            model.setValueAt(row, col, value);
+            SudokuCommand command = new SetValueCommand(model, row, col, value);
+            undoStack.push(command);
+            command.execute();
+            redoStack.clear();
         } else {
             System.out.println("Invalid value. Please try again.");
         }
     }
 
     public void undo() {
-        if (!commandHistory.isEmpty()) {
-            SudokuCommand lastCommand = commandHistory.remove(commandHistory.size() - 1);
-            lastCommand.undo();
-            undoneCommands.add(lastCommand);
+        if (!undoStack.isEmpty()) {
+            SudokuCommand command = undoStack.pop();
+            command.undo();
+            redoStack.push(command);
+        } else {
+            System.out.println("Nothing to undo.");
         }
     }
 
     public void redo() {
-        if (!undoneCommands.isEmpty()) {
-            SudokuCommand lastUndoneCommand = undoneCommands.remove(undoneCommands.size() - 1);
-            lastUndoneCommand.execute();
-            commandHistory.add(lastUndoneCommand);
+        if (!redoStack.isEmpty()) {
+            SudokuCommand command = redoStack.pop();
+            command.execute();
+            undoStack.push(command);
+        } else {
+            System.out.println("Nothing to redo.");
         }
     }
-
-
 }

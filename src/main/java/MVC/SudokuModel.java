@@ -1,17 +1,15 @@
 package MVC;
+
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class SudokuModel {
+public class SudokuModel implements SudokuObserver {
     private int[][] board;
     private List<SudokuObserver> observers;
-    private SudokuSolverStrategy solverStrategy;
 
     public SudokuModel(int boardSize) {
         board = new int[boardSize][boardSize];
         observers = new ArrayList<>();
-        this.solverStrategy = solverStrategy;
     }
 
     public int getValueAt(int row, int col) {
@@ -57,10 +55,6 @@ public class SudokuModel {
         return board.length;
     }
 
-    public void registerObserver(SudokuObserver observer) {
-        observers.add(observer);
-    }
-
     public boolean isGameFinished() {
         for (int i = 0; i < this.getBoardSize(); i++) {
             for (int j = 0; j < this.getBoardSize(); j++) {
@@ -72,17 +66,18 @@ public class SudokuModel {
         return true;
     }
 
-    public int getBlockSize() {
-        return (int) Math.sqrt(board[0].length);
+    @Override
+    public void onValueChanged(int row, int col, int value) {
+        setValueAt(row, col, value);
     }
 
-    private void notifyObservers(int row, int col, int value) {
+    public void registerObserver(SudokuObserver observer) {
+        observers.add(observer);
+    }
+
+    public void notifyObservers(int row, int col, int value) {
         for (SudokuObserver observer : observers) {
-            observer.update(row, col, value);
+            observer.onValueChanged(row, col, value);
         }
-    }
-
-    public boolean solve() {
-        return solverStrategy.solve(this);
     }
 }

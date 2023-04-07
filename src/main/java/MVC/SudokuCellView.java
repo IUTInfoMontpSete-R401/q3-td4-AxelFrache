@@ -11,7 +11,7 @@ public class SudokuCellView implements SudokuObserver {
     }
 
     @Override
-    public void update(int row, int col, int value) {
+    public void onValueChanged(int row, int col, int value) {
         if (this.row == row && this.col == col) {
             this.value = value;
             display();
@@ -19,6 +19,6 @@ public class SudokuCellView implements SudokuObserver {
     }
 
     public void display() {
-        System.out.println("SudokuCellView at row " + (row + 1) + ", column " + (col + 1) + " updated to " + value);
+        System.out.println("Cell at row " + row + ", column " + col + " updated to " + value);
     }
 }

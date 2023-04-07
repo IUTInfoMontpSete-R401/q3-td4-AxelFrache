@@ -1,6 +1,6 @@
 package MVC;
 
-public interface SudokuCommand {
-    void execute();
-    void undo();
+public abstract class SudokuCommand {
+    public abstract void execute();
+    public abstract void undo();
 }

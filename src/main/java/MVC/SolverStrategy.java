@@ -1,5 +1,5 @@
 package MVC;
 
-public interface SudokuSolverStrategy {
+public interface SolverStrategy {
     boolean solve(SudokuModel model);
 }

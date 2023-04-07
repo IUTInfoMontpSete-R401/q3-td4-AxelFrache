@@ -1,6 +1,6 @@
 # TD4 : Patron MVC
 
-### Exercice 1
+### Question 1
 ##### Diagramme de classes (solution AntiPattern):
 ![AntiPattern](UML/AntiPatternUML.png)
 
@@ -38,41 +38,32 @@ La classe Sudoku contient à la fois des méthodes pour résoudre le Sudoku (par
 Cette classe ne respecte pas le principe de responsabilité unique (SRP) et est donc difficile à maintenir et à tester.
 
 ### Question 7
-
-On pourrait diviser le Sudoku en trois parties distinctes en suivant le patron de conception Modèle-Vue-Contrôleur. 
-Le modèle représenterait les données et la logique du jeu et serait responsable de notifier les observateurs lorsqu'il y a un changement dans les données. 
-La vue assurerait la présentation du jeu en s'actualisant en fonction des changements dans le modèle grâce au patron Observateur. 
-Enfin, le contrôleur pourrait gérer les événements utilisateur, interagir avec le modèle et la vue pour mettre à jour l'état du jeu, et coordonner les interactions entre le modèle et la vue.
+Pour diviser la solution en trois parties distinctes, nous allons créer trois classes : SudokuModel pour le modèle, SudokuView pour la vue et SudokuController pour le contrôleur. 
+Le modèle contiendra les données du jeu, la vue gérera l'affichage et le contrôleur s'occupera des événements utilisateur.
 
 ### Question 8
-Pour appliquer le patron Observateur dans le jeu de Sudoku, on crée un lien entre le modèle et la vue, de manière à ce que la vue soit informée des modifications dans le modèle. 
-Pour cela, le modèle (SudokuModel) doit avoir une liste d'observateurs et des méthodes pour ajouter (registerObserver) et informer (notifyObservers) ces observateurs lorsqu'il y a une modification des données.
-La vue (SudokuView) doit mettre en œuvre l'interface SudokuObserver, qui définit la méthode update. Cette méthode est appelée par le modèle lorsqu'il y a une modification des données. 
-Donc, chaque fois qu'une mise à jour a lieu dans le modèle, la méthode update est appelée sur chaque observateur enregistré, et la vue se met à jour en conséquence.
-
+Pour appliquer le patron Observateur, nous ferons en sorte que la classe SudokuModel hérite de l'interface SudokuObserver et qu'elle notifie tous les observateurs (SudokuCellView) lorsqu'une valeur change. 
+La classe SudokuView deviendra également un observateur et mettra à jour l'affichage en fonction des changements dans le modèle.
 ### Question 9
-Pour appliquer le patron Stratégie dans la résolution du Sudoku, on crée une interface SudokuSolverStrategy qui définit la méthode de résolution générale comme solve(SudokuModel). 
-Cette interface sera implémentée par différentes classes concrètes représentant les algorithmes de résolution spécifiques, tels que BacktrackingSolver.
-Ensuite, dans le modèle ou le contrôleur, on utilise une référence de type SudokuSolver pour interagir avec l'algorithme de résolution. 
-Pendant la création de l'instance du modèle ou du contrôleur, on peut choisir l'implémentation de l'algorithme de résolution en fonction des besoins.
+Pour appliquer le patron Stratégie, nous créerons une interface SudokuSolver que les différentes classes d'algorithmes de résolution du Sudoku implémenteront. 
+Le modèle utilisera cette interface pour résoudre le Sudoku, permettant de changer facilement l'algorithme de résolution sans impacter le reste du code.
 
 ### Question 10
-Pour utiliser le patron Commande dans le jeu de Sudoku, on crée une classe SudokuCommand avec des méthodes pour exécuter et annuler les actions. 
-On crée ensuite des classes spécifiques pour chaque action avec une classe SetValueCommand pour modifier une valeur dans le modèle.
-Le contrôleur utilise ces commandes pour gérer les actions des utilisateurs. 
-Lorsqu'une action est réalisée, le contrôleur exécute la commande correspondante. 
-Pour annuler ou rétablir une action, le contrôleur utilise la méthode undo() de la commande appropriée.
+Pour appliquer le patron Commande, nous créerons une classe abstraite SudokuCommand avec les méthodes execute() et undo(). 
+Les classes de commandes spécifiques (par exemple SetValueCommand) hériteront de cette classe et permettront au contrôleur de modifier le modèle de manière encapsulée.
 
 ### Question 11
-On peut se servir du pattern Composite pour construire la vue du Sudoku à partir de multiples SudokuCellView.
-Pour cela nous pouvons modifier la classe SudokuView pour lui ajouter un tableau de SudokuCellView et mettre à jour ces objets lors de l'appel de la méthode update().
+Pour appliquer le patron Composition, nous construirons la vue du Sudoku à partir de plusieurs instances de SudokuCellView. 
+Chaque cellule sera responsable de l'affichage de son contenu et la classe SudokuView se chargera de la gestion globale de l'affichage.
 
 ### Question 12
-Pour que le jeu de Sudoku fonctionne, il faudrait créer une interface graphique pour afficher la grille de jeu et permettre à l'utilisateur de saisir des chiffres. 
-Il faudrait également créer une classe pour le modèle de Sudoku qui contient les données du jeu et les méthodes pour accéder et modifier les valeurs de la grille. 
-Ensuite, il faudrait relier l'interface utilisateur à la classe de modèle pour permettre à l'utilisateur de jouer et mettre à jour la grille. 
-Enfin, il faudrait ajouter une méthode pour vérifier si le jeu est terminé en vérifiant si toutes les cases sont remplies correctement.
+Pour relier toutes les parties entre elles, nous établirons des liens entre les classes. 
+Le contrôleur utilisera le modèle et la vue, la vue observera le modèle et se mettra à jour en conséquence, et les différentes stratégies de résolution et commandes seront utilisées par le contrôleur et le modèle.
 
 ### Question 13
 ##### Diagramme de classes (solution MVC):
 ![MVC UML](UML/mvcUML.png)
+
+### Questions 14 à 25 : Partie JAVA
+
+Voir le code source dans le dossier [src](src).
